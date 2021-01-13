@@ -1,0 +1,18 @@
+.require
+{
+    color: red;
+    /*font-weight: bold;*/
+}
+.errorfield
+{
+    border: 1px solid red; 
+    background-color: #f8d7da;;
+}
+#ced
+{
+	color:#e7663f;
+}
+
+#hosting{
+	color:#585CA7
+}
