@@ -7,6 +7,7 @@ $msg='';
 $err='';
 if(isset($_POST['login']) && $_POST['login']=='Login')
 {
+
 	$email = isset($_POST['email']) ? ($_POST['email']) : "";
 	$password = isset($_POST['password']) ? ($_POST['password']) : "";
 	$res=$user->login($email,$password,$conn->conn());
@@ -59,8 +60,8 @@ require_once 'header.php';
 						<p>If you have an account with us, please log in.</p>
 						<form action="" method="post">
 							<div>
-								<span>Email Address<label>*</label></span>
-								<input type="email" name="email" required>
+								<span>Email Address/Mobile Number<label>*</label></span>
+								<input type="text" name="email" required placeholder="Enter mobile number or email">
 							</div>
 							<div>
 								<span>Password<label>*</label></span>

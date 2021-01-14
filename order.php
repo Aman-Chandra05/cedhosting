@@ -29,7 +29,7 @@ if(isset($_POST))
 	$res=$add->insertaddress($_SESSION['userid'],$_SESSION['username'],$hno,$city,$state,$country,$pincode,$conn->conn());
 	if($res!=-1)
 	{
-		$res1=$order->addorder($_SESSION['userid'],$res,$status,'0','0','0',$_POST['taxammount'],$_POST['payableprice'],$conn->conn());
+		$res1=$order->addorder($_SESSION['userid'],$res,$status,'0','0','0',$_POST['taxammount'],$_POST['payableprice'],$_SESSION['cartdetails'],$conn->conn());
 		if($res)
 		{
 			echo "success";

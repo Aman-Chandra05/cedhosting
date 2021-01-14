@@ -1518,7 +1518,7 @@ a.button4:hover {
 	display: block;
 	text-transform: uppercase;
 }
-.login-right input[type="email"],.login-right input[type="password"] {
+.login-right input[type="email"],.login-right input[type="password"],.login-right input {
 	border: 1px solid #555;
 	outline-color:#08538C;
 	width: 96%;

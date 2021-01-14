@@ -22,21 +22,28 @@ $user=new User();
 $add=new UserBillingAddress();
 $state=new State();
 $comstate=new CompanyInfo();
-if(isset($_POST['checkout']))
-{
-	$hno = isset($_POST['hno']) ? ($_POST['hno']) : "";
-	$city = isset($_POST['city']) ? ($_POST['city']) : "";
-	$state = isset($_POST['state']) ? ($_POST['state']) : "";
-	$pincode = isset($_POST['pincode']) ? ($_POST['pincode']) : "";
-	$country = isset($_POST['country']) ? ($_POST['country']) : "";
-	$res=$add->insertaddress($_SESSION['userid'],$_SESSION['username'],$hno,$city,$state,$country,$pincode,$conn->conn());
- }
+// if(isset($_POST['checkout']))
+// {
+// 	$hno = isset($_POST['hno']) ? ($_POST['hno']) : "";
+// 	$city = isset($_POST['city']) ? ($_POST['city']) : "";
+// 	$state = isset($_POST['state']) ? ($_POST['state']) : "";
+// 	$pincode = isset($_POST['pincode']) ? ($_POST['pincode']) : "";
+// 	$country = isset($_POST['country']) ? ($_POST['country']) : "";
+// 	$res=$add->insertaddress($_SESSION['userid'],$_SESSION['username'],$hno,$city,$state,$country,$pincode,$conn->conn());
+//  }
  $totalprice=0;
  $taxammount=0;
+ $details=array();
  foreach ($_SESSION['cart'] as $key)  {
  	//$taxammount=$taxammount+$key['taxammount'];
- 	$totalprice=$totalprice+$key['totalprice'];
+	 $totalprice=$totalprice+$key['totalprice'];
+	 $detailsarray[]=$key['prod_name'];
  }
+//  echo "<pre>";
+//  print_r($details);
+//  echo "</pre>";
+$details = json_encode($detailsarray);
+$_SESSION['cartdetails']=$details;
 ?>
 <?php
 require_once 'header.php';

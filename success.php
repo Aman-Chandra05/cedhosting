@@ -58,6 +58,7 @@ if (count($_SESSION['cart'])==0)
 		<?php
 		}
 		unset($_SESSION['cart']);
+		unset($_SESSION['cartdetails']);
 	}
 
 

@@ -41,12 +41,22 @@ class User
             $row=$res->fetch_assoc();
             $conn->close();
             return $row;
-		}
-    	else
-		{
-            $conn->close();
-            return 0;
-		} 
+        }
+        else {
+            $sql="SELECT * FROM `tbl_user` WHERE `mobile`='$email' AND `password`='$password'";
+            $res=$conn->query($sql);
+            if($res->num_rows>0)
+            {
+                $row=$res->fetch_assoc();
+                $conn->close();
+                return $row;
+            }
+            else
+            {
+                $conn->close();
+                return 0;
+            } 
+        }
     }
     public function emailverify($conn,$email=-1)
     {

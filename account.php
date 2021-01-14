@@ -33,40 +33,93 @@ if(isset($_POST['register']) && $_POST['register']=='submit')
 	}
 	else
 	{
-		$mailotp=rand(100000,999999);
-		$_SESSION['mailotp']=$mailotp;
-		require 'phpmailer/PHPMailerAutoload.php';   
-		$mail = new PHPMailer(true);
-		try { 
-			//$mail->SMTPDebug = 2;                                        
-			$mail->isSMTP();                                             
-			$mail->Host       = 'smtp.gmail.com;';                     
-			$mail->SMTPAuth   = true;                              
-			$mail->Username   = 'amanchandra081@gmail.com';                  
-			$mail->Password   = 'amantheboss';                         
-			$mail->SMTPSecure = 'tls';                               
-			$mail->Port       = 587;   
-		  
-			$mail->setFrom('amanchandra081@gmail.com', 'Aman');            
-			$mail->addAddress($email); 
-			   
-			$mail->isHTML(true);                                   
-			$mail->Subject = 'Email Verification'; 
-			$mail->Body    = 'Your OTP for verification is <b>'.$mailotp.'</b>'; 
-			$mail->AltBody = 'Your OTP for verification is '.$mailotp; 
-			$mail->send(); 
-			$canverify=1; 
-		} catch (Exception $e) { 
-			echo "Verification mail could not be sent. Mailer Error: {$mail->ErrorInfo}"; 
+		if($_POST['mode']=='email')
+		{
+			$mailotp=rand(100000,999999);
+			$_SESSION['mailotp']=$mailotp;
+			echo $mailotp;
+			require 'phpmailer/PHPMailerAutoload.php';   
+			$mail = new PHPMailer(true);
+			try { 
+				//$mail->SMTPDebug = 2;                                        
+				$mail->isSMTP();                                             
+				$mail->Host       = 'smtp.gmail.com;';                     
+				$mail->SMTPAuth   = true;                              
+				$mail->Username   = 'amanchandra081@gmail.com';                  
+				$mail->Password   = 'amantheboss';                         
+				$mail->SMTPSecure = 'tls';                               
+				$mail->Port       = 587;   
+			  
+				$mail->setFrom('amanchandra081@gmail.com', 'Aman');            
+				$mail->addAddress($email); 
+				   
+				$mail->isHTML(true);                                   
+				$mail->Subject = 'Email Verification'; 
+				$mail->Body    = 'Your OTP for verification is <b>'.$mailotp.'</b>'; 
+				$mail->AltBody = 'Your OTP for verification is '.$mailotp; 
+				$mail->send(); 
+				$canverify=1; 
+			} catch (Exception $e) { 
+				echo "Verification mail could not be sent. Mailer Error: {$mail->ErrorInfo}"; 
+			}
+		}
+		elseif($_POST['mode']=='mobile')
+		{
+			$mobileotp=rand(100000,999999);
+			$_SESSION['mobileotp']=$mobileotp;
+			echo "maobile: ".$mobileotp;
+			$fields = array(
+				"sender_id" => "FSTSMS",
+				"message" => "Your otp is ".$mobileotp,
+				"language" => "english",
+				"route" => "p",
+				"numbers" => $mobile,
+			);
+			
+			$curl = curl_init();
+			
+			curl_setopt_array($curl, array(
+			  CURLOPT_URL => "https://www.fast2sms.com/dev/bulk",
+			  CURLOPT_RETURNTRANSFER => true,
+			  CURLOPT_ENCODING => "",
+			  CURLOPT_MAXREDIRS => 10,
+			  CURLOPT_TIMEOUT => 30,
+			  CURLOPT_SSL_VERIFYHOST => 0,
+			  CURLOPT_SSL_VERIFYPEER => 0,
+			  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			  CURLOPT_CUSTOMREQUEST => "POST",
+			  CURLOPT_POSTFIELDS => json_encode($fields),
+			  CURLOPT_HTTPHEADER => array(
+				"authorization: wofa73zRn8shDWOlFudxKYIA29MbiGHgk51pUry0TPqJ4t6SLNRgM3rhU56ZiaDNvkdAX0PeGw9xmbf7",
+				"accept: */*",
+				"cache-control: no-cache",
+				"content-type: application/json"
+			  ),
+			));
+			
+			$response = curl_exec($curl);
+			$err = curl_error($curl);
+			
+			curl_close($curl);
+			
+			if ($err) {
+			  echo "cURL Error #:" . $err;
+			} else {
+				$canverify=1;
+			  //echo $response;
+			}
 		}
 		if($canverify==1)
 		{
-			header('location:accountverification.php?mobile='.$mobile.'&email='.$email);
+			header('location:accountverification.php?mobile='.$mobile.'&email='.$email.'&mode='.$_POST['mode']);
 		}	
 		else {
 			$err="Sorry your account could not be verified";
 		} 
-	}	
+	}
+	// echo "<pre>";
+	// print_r($_POST);
+	// echo "</pre>";
 }
 ?>
 <?php
@@ -80,7 +133,12 @@ require_once 'header.php';
 			<div class="register">
 				<form action="#" method="post" onsubmit="return validatereg();">
 					<div class="register-top-grid" style="overflow:hidden;">
-						<h3>personal information</h3>
+						<div style="clear:both;">
+						<h3 style="clear:both;">Register by</h3>
+							<label class="radio-inline"><input type="radio" value="mobile" name="mode" required>Mobile Number</label>
+							<label class="radio-inline"><input type="radio" value="email"name="mode" required>Email</label>
+						</div>
+						<h3 style="clear:both;">personal information</h3>
 						<div>
 							<span>Name<label>*</label></span>
 							<input type="text" id="name" name="name" required value="<?php if(isset($_POST['name'])){echo htmlentities($_POST['name']);}?>">
