@@ -1,5 +1,10 @@
 $(document).ready(function() 
 {
+    $("#shoppingcart").hover(function(){
+    $("#badge").css("background-color", "#7277d5");
+    }, function(){
+    $("#badge").css("background-color", "#e7663f");
+    });
     $('.addcart').click(function(){
         let id=$(this).data('id');
         let prodid=$(this).data('prodid');
@@ -8,6 +13,9 @@ $(document).ready(function()
         $("#idp").val(id);
         $("#prodid").val(prodid);
         $(".cartmsg").html("");
+        //$(".closebutton").hide();
+        $("#plan").val("");
+        $("#planmsg").html("");
 
     });
 
@@ -15,24 +23,30 @@ $(document).ready(function()
         let id=$("#idp").val();
         let prodid=$("#prodid").val();
         let plan=$("#plan").val();
-        console.log(id);
-        console.log(prodid);
-        console.log(plan);
-        $.ajax({
-            url: 'addtocart.php',
-            method: 'POST',
-            data: {id,prodid,plan},
-            dataType: 'html',
-            success: function(result)
-            {
-
-                $(".cartmsg").html("<p style='margin-left:20px; font-size:large; margin-top:20px;'>"+result+"</p>");
-            },
-            error: function()
-            {
-                $(".modal-body").html("<p style='margin-left:20px; font-size:large; margin-top:20px;'>>Some error occured</p>");
-            }
-        });
+        if(plan=="Monthly" || plan=="Annual")
+        {
+            $.ajax({
+                    url: 'addtocart.php',
+                    method: 'POST',
+                    data: {id,prodid,plan},
+                    dataType: 'json',
+                    success: function(result)
+                    {
+                        //$(".closebutton").show();
+                        $("#planmsg").html("");
+                        $(".cartmsg").html("<p style='margin-left:20px; font-size:large; margin-top:20px;'>"+result.res+"</p>");
+                        $("#badge").text(result.count);
+                    },
+                    error: function()
+                    {
+                        $(".modal-body").html("<p style='margin-left:20px; font-size:large; margin-top:20px;'>Some error occured</p>");
+                    }
+                });
+        }
+        else
+        {
+            $("#planmsg").html("<span style='color:red'>** Select your plan</span>")
+        }
     });
 }); 
 

@@ -1,105 +1,153 @@
 let payableprice=0;
 let comstate=$("#comstate").val();
 let st=0;
+let igstrate=18;
+let cgstrate=5;
+let sgstrate=9;
 let taxammount=0;
-console.log(comstate);
+let status='';
 $("#state").change(function(){
 	tp=parseFloat($('#totalprice').text());
 	st=$("#state").val();
 	if(comstate==st)
 	{
 		
-		cgst=9*tp/100;
-		sgst=9*tp/100;
+		cgst=cgstrate*tp/100;
+		sgst=sgstrate*tp/100;
 		tp=tp+cgst+sgst;
 		tp=Math.round(tp);
 		taxammount=Math.round(cgst+sgst);
 	}
 	else
 	{
-		igst=18*(tp)/100;
+		igst=igstrate*(tp)/100;
 		taxammount=igst;
 		tp=tp+igst;
 		tp=Math.round(tp);
 		taxammount=Math.round(igst);
 	}
 	payableprice=tp;
-console.log(taxammount);
 });
 
-let status='';
+$('#cod').click(function(){
+	let status="PENDING";
+	let condition=validate();
+	if(condition==0)
+		placingorder(status);
+});
+
+function validate()
+{
+	let err=0;
+	let hno=$("#hno").val();
+    let city=$("#city").val();
+    let state=$("#state").val();
+    let pincode=$("#pincode").val();
+    let country=$("#country").val();
+    if(hno==null || hno=='')
+    {
+    	$("#hnomsg").html("<small class='billaddressform'>** Required Field</small>");
+    	err=1;
+    }
+    else $("#hnomsg").html("");
+    if(city==null || city=='')
+    {
+    	$("#citymsg").html("<small class='billaddressform'>** Required Field</small>");
+    	err=1;
+    }
+   	else $("#citymsg").html("");    
+    if(state==null || state=='')
+    {
+    	$("#statemsg").html("<small class='billaddressform'>** Required Field</small>");
+    	err=1;
+    }
+    else $("#statemsg").html("");    
+    if(pincode==null || pincode=='')
+    {
+    	$("#pincodemsg").html("<small class='billaddressform'>** Required Field</small>");
+    	err=1;
+    }
+    else $("#pincodemsg").html("");    
+    if(country==null || country=='')
+    {
+    	$("#countrymsg").html("<small class='billaddressform'>** Required Field</small>");
+    	err=1;
+    }
+    else $("#countrymsg").html("");    
+    return err;
+}
+
 paypal.Buttons({
 	style:{
 		color:'blue',
 		maxwidth:'100px'
 	},
     createOrder: function(data, actions) {
+    		let condition=validate();
+			if(condition==0)
+		{
       // This function sets up the details of the transaction, including the amount and line item details.
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: tp
+            value: payableprice
             //currency_code: 'USD'
             //'currency':'INR'
           }
         }]
       });
+  	}
     },
     onApprove: function(data, actions) {
+    	if(!val)
       // This function captures the funds from the transaction.
       return actions.order.capture().then(function(details) {
         // This function shows a transaction success message to your buyer.
         //alert('Transaction completed by ' + details.payer.name.given_name);
-        console.log(details);
-        $('#orderid').text(details.id);
+        // console.log(details);
+        // $('#orderid').text(details.id);
         if(details.status=="COMPLETED")
         {
-		    let hno=$("#hno").val();
-		    let city=$("#city").val();
-		    let state=$("#state").val();
-		    let pincode=$("#pincode").val();
-		    let country=$("#country").val();
-
-		    $.ajax({
-		        url: 'order.php',
-		        method: 'POST',
-		        data: {hno,city,state,pincode,country,taxammount},
-		        dataType: 'html',
-		        success: function(result)
-		        {
-
-		            $("#orderid").html("<p style='margin-left:20px; font-size:large; margin-top:20px;'>"+result+"</p>");
-		        },
-		        error: function()
-		        {
-		            $("#orderid").html("<p style='margin-left:20px; font-size:large; margin-top:20px;'>>Some error occured</p>");
-		        }
-		    });        	
+        	status=details.status
+		    placingorder(status);
+        }
+        else
+        {
+        	window.location.href = "fail.php";
         }
       });
     }
 }).render('#paypal-button-container');
 
-// $('#paypal-button-container').click(function(){
-//     let hno=$("#hno").val();
-//     let city=$("#city").val();
-//     let state=$("#state").val();
-//     let pincode=$("#pincode").val();
-//     let country=$("#country").val();
 
-//     $.ajax({
-//         url: 'order.php',
-//         method: 'POST',
-//         data: {hno,city,state,pincode,country},
-//         dataType: 'html',
-//         success: function(result)
-//         {
-
-//             $("#orderid").html("<p style='margin-left:20px; font-size:large; margin-top:20px;'>"+result+"</p>");
-//         },
-//         error: function()
-//         {
-//             $("#orderid").html("<p style='margin-left:20px; font-size:large; margin-top:20px;'>>Some error occured</p>");
-//         }
-//     });
-// });
+function placingorder(status)
+{
+	let hno=$("#hno").val();
+    let city=$("#city").val();
+    let state=$("#state").val();
+    let pincode=$("#pincode").val();
+    let country=$("#country").val();
+    let orderstatus=status;
+    $.ajax({
+        url: 'order.php',
+        method: 'POST',
+        data: {hno,city,state,pincode,country,taxammount,payableprice,orderstatus},
+        dataType: 'html',
+        success: function(result)
+        {
+        	if(result=="success")
+        	{
+        		location.replace('success.php?tax='+taxammount+'&finalpay='+payableprice+'&status='+orderstatus);
+        		
+        	}
+        	else if(result=="fail")
+        	{
+        		window.location.replace("fail.php");
+        	}
+        },
+        error: function()
+        {
+        	alert("error");
+        }
+    });        	
+}

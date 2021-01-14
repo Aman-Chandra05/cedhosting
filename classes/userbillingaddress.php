@@ -14,7 +14,7 @@ class UserBillingAddress
         }
 		
 	else
-		return $conn->error;
+		return -1;
 	}
 }
 

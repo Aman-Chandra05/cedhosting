@@ -124,15 +124,18 @@ if($res!=0)
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Plan</label>
-                    <select class="form-control" id="plan">
+                    <select class="form-control" id="plan" required>
+                      <option value="" selected disabled>Select Plan</option>
                       <option value="Monthly">Monthly</option>
                       <option value="Annual">Annual</option>
                     </select>
+                    <small id="planmsg"></small>
                 </div>
                       <div class="cartmsg">
                       </div>
             </div>
             <div class="modal-footer d-flex justify-content-center pt-0">
+                <button type="button" class="btn btn-secondary closebutton" data-dismiss="modal">Close</button>
                 <input type="submit" class="btn btn-primary" value="Add to cart" id="addtocart" name="addtocart">
             </div>
             <div class="modal-footer d-flex justify-content-center pt-0" id="updatecatmsg"></div>

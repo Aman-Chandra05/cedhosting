@@ -8,11 +8,22 @@ if(isset($_GET['id']) && isset($_GET['action']))
 	{
 		foreach ($_SESSION['cart'] as $key=>$value) {
 			if($value['prod_id']==$id)
-				unset($_SESSION['cart'][$key]);
+            {
+				unset($_SESSION['cart'][$key]); 
+            ?>
+            <script>
+                location.reload();
+            </script>        
+            <?php       
+            }
+            
 		}		
 	}
 
 }
+// echo "<pre>";
+// print_r($_SESSION['cart']);
+// echo "</pre>";
 ?>
 <div class="container">
 	<?php
@@ -26,9 +37,9 @@ if(isset($_GET['id']) && isset($_GET['action']))
     	<th>Product Category</th>
     	<th>sku</th>
     	<th>Billing Cycle</th>
-    	<th>Amount</th>
+    	<!--<th>Amount</th>
         <th>Tax rate</th>
-        <th>Tax Amount</th>
+        <th>Tax Amount</th> -->
         <th>Total Amount</th>
     	<th>Action</th>
     </tr>
@@ -43,11 +54,11 @@ if(isset($_GET['id']) && isset($_GET['action']))
     		<td><?php echo $key['category'];?></td>
     		<td><?php echo $key['sku'];?></td>
     		<td><?php echo $key['billingcycle'];?></td>
-    		<td><?php echo $key['ammount'];?></td>
-            <td><?php echo $key['taxrate'];?></td>
-            <td><?php echo $key['taxammount'];?></td>
+    		<!-- <td><?php //echo $key['ammount'];?></td> -->
+            <!-- <td><?php //echo $key['taxrate'];?></td> -->
+            <!-- <td><?php //echo $key['taxammount'];?></td> -->
             <td><?php echo $key['totalprice'];?></td>
-    		<td><a href="?id=<?php echo $key['prod_id'];?>&action=delete" class="btn btn-danger">Remove</a></td>
+    		<td><a href="?id=<?php echo $key['prod_id'];?>&action=delete" class="btn btn-danger btn-sm">Remove</a></td>
     	</tr>
 
     	
@@ -71,3 +82,6 @@ else
 </div>
 <?php include "footer.php";
 ?>
+<script>
+    console.log("ad");
+</script>

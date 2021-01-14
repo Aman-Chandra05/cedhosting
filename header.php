@@ -25,6 +25,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="js/modernizr.custom.97074.js"></script>
 <script src="js/jquery.chocolat.js"></script>
 <link rel="stylesheet" href="css/chocolat.css" type="text/css" media="screen">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
 <!--lightboxfiles-->
 <script type="text/javascript">
 	$(function() {
@@ -95,7 +101,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<li><a href="pricing.php">Pricing</a></li>
 								<li><a href="blog.php">Blog</a></li>
 								<li><a href="contact.php">Contact</a></li>
-								<li><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+								<li id="shoppingcart"><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><span id="badge" class="badge badge-secondary"><?php 
+								if(isset($_SESSION['cart']))
+									echo count($_SESSION['cart']);
+								else
+									echo '0';
+								?></span>
+							</a></li>
 								<?php if(isset($_SESSION['userid'])&&isset($_SESSION['username']))
 								  {?>
 								  <li><a href="logout.php">Log out</a></li>

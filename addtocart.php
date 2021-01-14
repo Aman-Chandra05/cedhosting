@@ -4,6 +4,8 @@ require_once 'classes/product.php';
 $product=new Product();
 $conn = new Dbcon();
 $status=-1;
+$totalprice=0;
+$taxammount=0;
 if(isset($_POST['prodid']) && isset($_POST['id']) && isset($_POST['plan']))
 {
     $res=$product->fetchproduct($_POST['prodid'],$conn->conn());
@@ -21,8 +23,8 @@ if(isset($_POST['prodid']) && isset($_POST['id']) && isset($_POST['plan']))
         $arrid=array_column($_SESSION['cart'], 'prod_id');
         if(count($_SESSION['cart'])==0)
         {
-           $taxammount=2*$price/100;
-           $totalprice=$taxammount+$price;
+           //$taxammount=2*$price/100;
+           $totalprice=$totalprice+$price;
             $item=array(
                 'prod_id'=>$res[0]['prod_id'],
                 'prod_name'=>$res[0]['prod_name'],
@@ -30,8 +32,8 @@ if(isset($_POST['prodid']) && isset($_POST['id']) && isset($_POST['plan']))
                 'sku'=>$res[0]['sku'],
                 'billingcycle'=>$_POST['plan'],
                 'ammount'=>$price,
-                'taxrate'=>2,
-                'taxammount'=>$taxammount,
+                //'taxrate'=>2,
+                //'taxammount'=>$taxammount,
                 'totalprice'=>$totalprice
             );
             $_SESSION['cart'][]=$item;     
@@ -41,8 +43,8 @@ if(isset($_POST['prodid']) && isset($_POST['id']) && isset($_POST['plan']))
         {
             if(!in_array($_POST['prodid'], $arrid))
             {
-           $taxammount=2*$price/100;
-           $totalprice=$taxammount+$price;
+           //$taxammount=2*$price/100;
+           $totalprice=$totalprice+$price;
             $item=array(
                 'prod_id'=>$res[0]['prod_id'],
                 'prod_name'=>$res[0]['prod_name'],
@@ -50,8 +52,8 @@ if(isset($_POST['prodid']) && isset($_POST['id']) && isset($_POST['plan']))
                 'sku'=>$res[0]['sku'],
                 'billingcycle'=>$_POST['plan'],
                 'ammount'=>$price,
-                'taxrate'=>2,
-                'taxammount'=>$taxammount,
+                //'taxrate'=>2,
+                //'taxammount'=>$taxammount,
                 'totalprice'=>$totalprice
             );
                 $_SESSION['cart'][]=$item;   
@@ -65,8 +67,8 @@ if(isset($_POST['prodid']) && isset($_POST['id']) && isset($_POST['plan']))
     }
     else
     {
-           $taxammount=2*$price/100;
-           $totalprice=$taxammount+$price;
+           //$taxammount=2*$price/100;
+           $totalprice=$totalprice+$price;
             $item=array(
                 'prod_id'=>$res[0]['prod_id'],
                 'prod_name'=>$res[0]['prod_name'],
@@ -74,8 +76,8 @@ if(isset($_POST['prodid']) && isset($_POST['id']) && isset($_POST['plan']))
                 'sku'=>$res[0]['sku'],
                 'billingcycle'=>$_POST['plan'],
                 'ammount'=>$price,
-                'taxrate'=>2,
-                'taxammount'=>$taxammount,
+                //'taxrate'=>2,
+                //'taxammount'=>$taxammount,
                 'totalprice'=>$totalprice
             );
         $_SESSION['cart'][0]=$item;   
@@ -84,14 +86,17 @@ if(isset($_POST['prodid']) && isset($_POST['id']) && isset($_POST['plan']))
 }
 if($status==1)
 {
-    echo "Product added!!!";
+    $obj=array("count"=>count($_SESSION['cart']), "res"=>"Product added!!!");
+    echo json_encode($obj);
 }
 elseif ($status==0) {
-    echo "Product present in cart";
+    $obj=array("count"=>count($_SESSION['cart']), "res"=>"Product present in cart");
+    echo json_encode($obj);
 }
 else
 {
-    echo "Some error occured";
+    $obj=array("count"=>count($_SESSION['cart']), "res"=>"Some error occured");
+    echo json_encode($obj);
 }
 
 ?>
