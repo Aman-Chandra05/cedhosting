@@ -154,7 +154,7 @@ function placingorder(status)
             console.log(result);
         	if(result.res=="success")
         	{
-        		location.replace('success.php?tax='+taxammount+'&finalpay='+payableprice+'&status='+orderstatus+'&igst='+igst+'&cgst='+cgst+'&sgst='+sgst+'&trans='+trans+'&id='+result.orderid);
+        		location.replace('success.php?igst='+igst+'&cgst='+cgst+'&sgst='+sgst+'&trans='+trans+'&id='+result.orderid);
         		
         	}
         	else if(resul.res=="fail")

@@ -33,6 +33,8 @@ if(isset($_POST))
 		$res1=$order->addorder($_SESSION['userid'],$res,$status,'0','0','0',$_POST['taxammount'],$_POST['payableprice'],$_SESSION['cartdetails'],$conn->conn());
 		if($res1)
 		{
+			unset($_SESSION['cart']);
+			unset($_SESSION['cartdetails']);
 			$arr=array("orderid"=>$res1, "res"=>"success");
 			echo json_encode($arr);
 			//echo $arr;

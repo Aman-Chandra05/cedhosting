@@ -1,6 +1,5 @@
 <?php 
 include "header.php";
-
 if(isset($_GET['id']) && isset($_GET['action']))
 {
 	$id=$_GET['id'];
