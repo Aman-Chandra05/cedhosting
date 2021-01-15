@@ -1,9 +1,18 @@
+<?php
+require_once 'classes/dbcon.php';
+require_once 'classes/companyinfo.php';
+$company=new CompanyInfo();
+$conn = new Dbcon();
+$res=$company->getinfo($conn->conn());
+?>
+
+
 			<!---footer--->
 				<div class="facebook-section">
 					<div class="container">
-					<div class="face-top">
+					<!-- <div class="face-top">
 						<h5><img src="images/facebook.png"><span>I can’t believe my grand mothers making me take Out the garbage I’m rich fuck this I’m going home I don’t need this shit</span></h5>
-					</div>
+					</div> -->
 					</div>
 				</div>
 				<div class="footer-section">
@@ -85,12 +94,13 @@
 							</div>
 							<div class="col-md-3 footer-grid">
 								<h4>get in touch</h4>
-								<p>8901 Marmora Road</p>
-								<p>Glasgow, DO4 89GR.</p>
-								<p>Telephone : +1 234 567 890</p>
-								<p>Telephone : +1 234 567 890</p>
-								<p>FAX : + 1 234 567 890</p>
-								<p>E-mail : <a href="mailto:example@mail.com"> example@mail.com</a></p>
+
+								<p>Address : <?php  echo $res['comp_address']?></p>
+								<!-- <p><?php  //echo $res['comp_address']?></p> -->
+								<p>Telephone : <?php  echo $res['comp_contact']?></p>
+								<!-- <p>Telephone : +1 234 567 890</p>
+								<p>FAX : + 1 234 567 890</p> -->
+								<p>E-mail : <a href="mailto:example@mail.com"> <?php  echo $res['comp_email']?></a></p>
 							</div>
 							<div class="clearfix"></div>
 						</div>

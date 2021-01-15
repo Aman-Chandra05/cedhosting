@@ -59,7 +59,7 @@ if($res!=0)
                                         <li><strong><?php echo $desc['mailbox'];?></strong> Mailbox</li>
                                         <li><strong>location</strong> : <img src="images/india.png"></li>
                                     </ul>
-                                    <?php echo $_GET['id'];?>
+                                    <?php //echo $_GET['id'];?>
                                 </div>
                                 <a href="" class="addcart" data-id="<?php echo $_GET['id'];?>" data-prodid="<?php echo $key['prod_id'];?>" data-toggle="modal" data-target="#exampleModal">Add to Cart</a>
                             </div>
@@ -135,7 +135,7 @@ if($res!=0)
                       </div>
             </div>
             <div class="modal-footer d-flex justify-content-center pt-0">
-                <button type="button" class="btn btn-secondary closebutton" data-dismiss="modal">Close</button>
+                <button type="button" id="autoclick" class="btn btn-secondary closebutton" data-dismiss="modal">Close</button>
                 <input type="submit" class="btn btn-primary" value="Add to cart" id="addtocart" name="addtocart">
             </div>
             <div class="modal-footer d-flex justify-content-center pt-0" id="updatecatmsg"></div>

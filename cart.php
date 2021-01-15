@@ -58,7 +58,34 @@ if(isset($_GET['id']) && isset($_GET['action']))
             <!-- <td><?php //echo $key['taxrate'];?></td> -->
             <!-- <td><?php //echo $key['taxammount'];?></td> -->
             <td><?php echo $key['totalprice'];?></td>
-    		<td><a href="?id=<?php echo $key['prod_id'];?>&action=delete" class="btn btn-danger btn-sm">Remove</a></td>
+    		<td>
+                <a href="javascript:void(0)" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+                      Remove
+                </a>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h2 class="modal-title" id="exampleModalLabel">Confirmation Box</h2>
+                      </div>
+                      <div class="modal-body">
+                        <h4>Are you sure you want to delete?</h4>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <a href="?id=<?php echo $key['prod_id'];?>&action=delete" class="btn btn-danger">Yes</a>
+                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <a href="?id=<?php //echo $key['prod_id'];?>&action=delete" class="btn btn-danger btn-sm">Remove</a> -->
+                    
+            </td>
     	</tr>
 
     	
@@ -67,6 +94,15 @@ if(isset($_GET['id']) && isset($_GET['action']))
     ?>
   </tbody>
 </table>
+
+
+
+
+
+
+
+
+
 <div>
     <div class="aa-payment-method">  
         <br><a href="checkout.php" class="btn btn-danger">Place Order</a>                             

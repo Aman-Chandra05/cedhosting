@@ -34,8 +34,14 @@ $(document).ready(function()
                     {
                         //$(".closebutton").show();
                         $("#planmsg").html("");
-                        $(".cartmsg").html("<p style='margin-left:20px; font-size:large; margin-top:20px;'>"+result.res+"</p>");
-                        $("#badge").text(result.count);
+                        if(result.res=="success")
+                        {
+                            $("#badge").text(result.count);
+                            $("#autoclick").click();
+                        }
+                        else
+                            $(".cartmsg").html("<p style='margin-left:20px; font-size:large; margin-top:20px;'>"+result.res+"</p>");
+                        
                     },
                     error: function()
                     {

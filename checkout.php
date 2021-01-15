@@ -37,8 +37,10 @@ $comstate=new CompanyInfo();
  foreach ($_SESSION['cart'] as $key)  {
  	//$taxammount=$taxammount+$key['taxammount'];
 	 $totalprice=$totalprice+$key['totalprice'];
-	 $detailsarray[]=$key['prod_name'];
+	 //$detailsarray[]=$key['prod_name'];
+	 $detailsarray[]=array("productname"=>$key['prod_name'],"plan"=>$key['billingcycle'],"price"=>$key['ammount']);
  }
+ $detailsarray[]=$totalprice;
 //  echo "<pre>";
 //  print_r($details);
 //  echo "</pre>";

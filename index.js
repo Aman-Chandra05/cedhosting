@@ -2,16 +2,21 @@ let payableprice=0;
 let comstate=$("#comstate").val();
 let st=0;
 let igstrate=18;
-let cgstrate=5;
+let cgstrate=9;
 let sgstrate=9;
 let taxammount=0;
 let status='';
+let trans='';
+let cgst=0;
+let sgst=0;
+let igst=0;
+
 $("#state").change(function(){
 	tp=parseFloat($('#totalprice').text());
 	st=$("#state").val();
 	if(comstate==st)
 	{
-		
+		trans=1;
 		cgst=cgstrate*tp/100;
 		sgst=sgstrate*tp/100;
 		tp=tp+cgst+sgst;
@@ -20,6 +25,7 @@ $("#state").change(function(){
 	}
 	else
 	{
+        trans=0;
 		igst=igstrate*(tp)/100;
 		taxammount=igst;
 		tp=tp+igst;
@@ -90,7 +96,7 @@ paypal.Buttons({
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: payableprice
+            value: payableprice,
             //currency_code: 'USD'
             //'currency':'INR'
           }
@@ -98,24 +104,34 @@ paypal.Buttons({
       });
   	}
     },
-    onApprove: function(data, actions) {
-    	if(!val)
-      // This function captures the funds from the transaction.
-      return actions.order.capture().then(function(details) {
-        // This function shows a transaction success message to your buyer.
-        //alert('Transaction completed by ' + details.payer.name.given_name);
-        // console.log(details);
-        // $('#orderid').text(details.id);
-        if(details.status=="COMPLETED")
-        {
-        	status=details.status
-		    placingorder(status);
+    onApprove: function(data, actions) {    
+      let condition;
+      condition=validate();
+      if(condition==0)
+      {
+          // This function captures the funds from the transaction.
+          return actions.order.capture().then(function(details) {
+            // This function shows a transaction success message to your buyer.
+            //alert('Transaction completed by ' + details.payer.name.given_name);
+            console.log(details);
+            // $('#orderid').text(details.id);
+            if(details.status=="COMPLETED")
+            {
+            	status=details.status
+    		    placingorder(status);
+            }
+            else
+            {
+            	window.location.href = "fail.php";
+            }
+          });
         }
-        else
-        {
-        	window.location.href = "fail.php";
-        }
-      });
+
+
+
+
+
+
     }
 }).render('#paypal-button-container');
 
@@ -132,15 +148,16 @@ function placingorder(status)
         url: 'order.php',
         method: 'POST',
         data: {hno,city,state,pincode,country,taxammount,payableprice,orderstatus},
-        dataType: 'html',
+        dataType: 'json',
         success: function(result)
         {
-        	if(result=="success")
+            console.log(result);
+        	if(result.res=="success")
         	{
-        		location.replace('success.php?tax='+taxammount+'&finalpay='+payableprice+'&status='+orderstatus);
+        		location.replace('success.php?tax='+taxammount+'&finalpay='+payableprice+'&status='+orderstatus+'&igst='+igst+'&cgst='+cgst+'&sgst='+sgst+'&trans='+trans+'&id='+result.orderid);
         		
         	}
-        	else if(result=="fail")
+        	else if(resul.res=="fail")
         	{
         		window.location.replace("fail.php");
         	}

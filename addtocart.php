@@ -86,7 +86,7 @@ if(isset($_POST['prodid']) && isset($_POST['id']) && isset($_POST['plan']))
 }
 if($status==1)
 {
-    $obj=array("count"=>count($_SESSION['cart']), "res"=>"Product added!!!");
+    $obj=array("count"=>count($_SESSION['cart']), "res"=>"success");
     echo json_encode($obj);
 }
 elseif ($status==0) {

@@ -18,6 +18,17 @@ class CompanyInfo
 			return -1;
 		}
 	}
+	public function getinfo($conn)
+	{
+		$sql="SELECT * FROM `tbl_company_info`";
+		$res=$conn->query($sql);
+		if($res->num_rows>0)
+		{
+			$res=$res->fetch_assoc();
+			return $res;
+		}
+		else return 0;
+	}
 }
 
 

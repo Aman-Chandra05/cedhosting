@@ -9,6 +9,7 @@ $conn = new Dbcon();
 $user=new User();
 $add=new UserBillingAddress();
 $order=new Order();
+$arr=array();
 if(isset($_POST))
 {
 	$hno = isset($_POST['hno']) ? ($_POST['hno']) : "";
@@ -30,13 +31,17 @@ if(isset($_POST))
 	if($res!=-1)
 	{
 		$res1=$order->addorder($_SESSION['userid'],$res,$status,'0','0','0',$_POST['taxammount'],$_POST['payableprice'],$_SESSION['cartdetails'],$conn->conn());
-		if($res)
+		if($res1)
 		{
-			echo "success";
+			$arr=array("orderid"=>$res1, "res"=>"success");
+			echo json_encode($arr);
+			//echo $arr;
 		}
 		else
 		{
-			echo "fail";
+			$arr=array("res"=>"fail");
+			echo json_encode($arr);
+			//echo $arr;
 		}
 	}
 }

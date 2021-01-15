@@ -71,19 +71,19 @@ header('location:../index.php');
                     </h6>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="orders.php?order=pending">
+                            <a class="nav-link" href="orders.php?status=pending">
                                 <i class="ni ni-planet text-orange"></i>
                                 <span class="nav-link-text">Pending Orders </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="orders.php?order=cancel">
+                            <a class="nav-link" href="orders.php?status=Cancelled">
                                 <i class="ni ni-pin-3 text-primary"></i>
                                 <span class="nav-link-text">Cancelled Orders</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="orders.php?order=completed">
+                            <a class="nav-link" href="orders.php?order=complete">
                                 <i class="ni ni-single-02 text-yellow"></i>
                                 <span class="nav-link-text">Completed Orders</span>
                             </a>
