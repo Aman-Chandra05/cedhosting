@@ -19,15 +19,20 @@ class Order
 		}	
 	}
 
-	public function getorderbystatus($status,$conn)
+	public function getorderbystatus($status,$id=-1,$conn)
 	{
 		$arr=array();
+		$end=" AND `user_id`='".$id."'";
 		if($status=='pending')
 			$sql="SELECT * FROM `tbl_orders` WHERE `status`='0'";
 		elseif($status=='complete')
 			$sql="SELECT * FROM `tbl_orders` WHERE `status`='1'";
-		elseif($status=='cancelled')
+		elseif($status=='Cancelled')
 			$sql="SELECT * FROM `tbl_orders` WHERE `status`='-1'";
+		if($id!=-1)
+		{
+			$sql=$sql.$end;
+		}
 		$res=$conn->query($sql);
 		if($res->num_rows>0)
 		{
@@ -40,7 +45,24 @@ class Order
 		else
 		return 0;
 	}
-
+	public function getallorders($id=-1,$conn)
+	{
+		$end=" WHERE `user_id`='".$id."'";
+		$sql="SELECT * FROM `tbl_orders`";
+		if ($id!=-1) {
+				$sql=$sql.$end;
+			}
+		$res=$conn->query($sql);
+		if($res->num_rows>0)
+		{
+			while($row=$res->fetch_assoc())
+			{
+				$arr[]=$row;
+			}
+			return $arr;
+		}
+		else return 0;
+	}
 	public function fetchorder($id,$conn)
 	{
 		$sql="SELECT * FROM `tbl_orders` WHERE `id`='$id'";
@@ -55,9 +77,12 @@ class Order
 	public function changestatus($action,$id,$conn)
 	{
 		if($action=='cancel')
-		{
-			return '-1';
-		}
+			$status=-1;
+		elseif($action=='complete')
+			$status=1;
+		$sql="UPDATE `tbl_orders` SET `status`='$status' WHERE `id`='$id'";
+		$res=$conn->query($sql);
+
 	}
 }
 

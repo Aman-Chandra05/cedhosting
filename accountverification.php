@@ -12,7 +12,7 @@ if(isset($_POST['submit']))
     if(isset($_SESSION['mailotp']))
     {
         $res=0;
-        if($_SESSION['mailotp']==$_POST['emailotp'])
+        if($_SESSION['mailotp']==$_POST['otp'])
             $res=$user->emailverify($conn->conn(),$_GET['email']);
         if($res==0)
             $mailerr="OTP does not match.";
@@ -25,7 +25,7 @@ if(isset($_POST['submit']))
     if(isset($_SESSION['mobileotp']))
     {
         $res=0;
-        if($_SESSION['mobileotp']==$_POST['mobileotp'])
+        if($_SESSION['mobileotp']==$_POST['otp'])
             $res=$user->mobileverify($conn->conn(),$_GET['mobile']);
         if($res==0)
             $mobileerr="OTP does not match.";
@@ -75,8 +75,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <h1 class="text-center mb-5">Account Verification</h1>
         <form method="post" action="">
             <div class="form-group">
-                <label for="mailotp">Enter OTP send to your email id:</label>
-                <input type="number" name="emailotp" class="form-control" id="mailotp" placeholder="Enter OTP">
+                <label for="otp">Enter OTP send to your email or phone no:</label>
+                <input type="number" name="otp" class="form-control" id="otp" placeholder="Enter OTP">
                 <?php 
                     if($mail!='')
                         echo "<p class='text-success font-weight-bold'>".$mail."</p>"; 
@@ -98,7 +98,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </form>
     </div>
     <?php 
-		if($mail!='' || $mobile!='')
+        if($mail!='' || $mobile!='')
         {?>
     <div class="success">
         <strong><?php echo "Verification Successfull";?></strong>

@@ -83,13 +83,13 @@ header('location:../index.php');
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="orders.php?order=complete">
+                            <a class="nav-link" href="orders.php?status=complete">
                                 <i class="ni ni-single-02 text-yellow"></i>
                                 <span class="nav-link-text">Completed Orders</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="orders.php?order=all">
+                            <a class="nav-link" href="allorders.php">
                                 <i class="ni ni-single-02 text-yellow"></i>
                                 <span class="nav-link-text">All Orders</span>
                             </a>
@@ -175,7 +175,7 @@ header('location:../index.php');
                     <ul class="navbar-nav mb-md-3">
                         <li class="nav-item">
                             <a class="nav-link"
-                                href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html"
+                                href="updateinfo.php";
                                 target="_blank">
                                 <i class="ni ni-spaceship"></i>
                                 <span class="nav-link-text">Update Personal Info</span>

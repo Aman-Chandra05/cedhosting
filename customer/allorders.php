@@ -37,16 +37,12 @@ require_once 'header.php';
                                 <th scope="col">Tax</th>
                                 <th scope="col">Final Price</th>
                                 <th scope="col" style="text-align: center;">Order</th>
-                                <?php 
-                                if(isset($_GET['status']) && $_GET['status']=='pending')
-                                    echo "<th scope='col'>Action</th>";
-                                    ?> 
+                                <th scope='col'>Action</th>
+                                
                             </tr>
                         </thead>
-                        <?php
-                        if(isset($_GET['status']))
-                        {
-                            $res=$order->getorderbystatus($_GET['status'],$_SESSION['userid'],$conn->conn());
+                        <?php                        
+                            $res=$order->getallorders($_SESSION['userid'],$conn->conn());
                             if($res!=0)
                             {?>
                             <tbody>
@@ -58,7 +54,7 @@ require_once 'header.php';
                             <td><?php echo $key['id'];?></td>
                             <td><?php echo $key['user_billing_id'];?></td>
                             <td><?php echo $key['order_date'];?></td>
-                            <td><?php if($key['status']==1) echo 'Completed'; elseif($key['status']==0) echo 'Pending'; elseif($key['status']==-1) echo 'Cancelled';?></td>
+                            <td><?php if($key['status']==1) echo 'Completed'; elseif($key['status']==0) echo 'Pending';  elseif($key['status']==-1) echo "Cancelled";?></td>
                             <td>&#36; <?php echo $key['discount_amt'];?></td>
                             <td>&#36; <?php echo $key['tax_amt'];?></td>
                             <td>&#36; <?php echo $key['final_invoice_amt'];?></td>
@@ -78,9 +74,13 @@ require_once 'header.php';
                             </td>
                             </td>
                             <?php 
-                                if(isset($_GET['status']) && $_GET['status']=='pending')
+                                if($key['status']==0)
                                 {
                                echo "<td><a class='btn btn-primary  btn-sm' href='?status=pending&action=none&operation=cancel&id=".$key['id']."'>Cancel</a>";   
+                                }
+                                else
+                                {
+                                    echo "<td><a class='btn btn-light btn-sm' href='javascript:void(0)'>None</a>";
                                 }
                             ?>
                             </tr>
@@ -89,8 +89,8 @@ require_once 'header.php';
                             </tbody>
                             <?php
                             }
-                    }
-                    //else echo '5555';?>
+                    
+                    ?>
                     </table>
                 </div>              
             </div>

@@ -74,7 +74,7 @@ class User
     public function mobileverify($conn,$mobile=-1)
     {
         $success=0;
-        if($email!=-1)
+        if($mobile!=-1)
         {
             $sql="UPDATE `tbl_user` SET `phone_approved`='1', `active`='1' WHERE `mobile`='$mobile'";
             $res=$conn->query($sql);
