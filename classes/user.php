@@ -84,5 +84,51 @@ class User
         $conn->close();
         return $success;
     }
+
+    public function fetchuser($id,$conn)
+    {
+        $sql="SELECT * FROM `tbl_user` WHERE `id`='$id'";
+        $res=$conn->query($sql);
+        $res=$res->fetch_assoc();
+        return $res;
+    }
+
+    public function updatepersonalinfo($id,$name,$mobile,$email,$password,$conn)
+    {
+        $err=array();
+        $sql="SELECT * FROM `tbl_user` WHERE `email`='$email' AND `id`!='$id'";
+	    $res=$conn->query($sql);
+	    if($res->num_rows>0)
+	    {
+            $err['email']="* This Email is registered.";
+        }
+        $sql="SELECT * FROM `tbl_user` WHERE `mobile`='$mobile' AND `id`!='$id'";
+	    $res=$conn->query($sql);
+	    if($res->num_rows>0)
+	    {
+            $err['mobile']="* This Number is registered.";
+        } 
+        $sql="SELECT * FROM `tbl_user` WHERE `id`='$id'";
+        $res=$conn->query($sql);
+        $res=$res->fetch_assoc();
+        if($res['password']!=md5($password))
+            $err['password']="* Wrong password";
+        if(count($err)==0)
+        {
+            $sql="SELECT * FROM `tbl_user` WHERE `id`='$id'";
+            $res=$conn->query($sql);
+            $res=$res->fetch_assoc();
+            if($res['name']!=$name || $res['mobile']!=$mobile || $res['email']!=$email)
+            {
+                $sql="UPDATE `tbl_user` SET `email`='$email',`name`='$name',`mobile`='$mobile' WHERE `id`='$id'";
+                $res=$conn->query($sql);
+            }
+            else
+             $err['status']="Nothing Updated";
+
+        }
+        $conn->close();
+        return $err;
+    }
 }
 ?>

@@ -175,32 +175,28 @@ header('location:../index.php');
                     <ul class="navbar-nav mb-md-3">
                         <li class="nav-item">
                             <a class="nav-link"
-                                href="updateinfo.php";
-                                target="_blank">
+                                href="updateinfo.php">
                                 <i class="ni ni-spaceship"></i>
                                 <span class="nav-link-text">Update Personal Info</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"
-                                href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html"
-                                target="_blank">
+                                href="updatebillingaddress.php">
                                 <i class="ni ni-palette"></i>
                                 <span class="nav-link-text">Billing Address</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"
-                                href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html"
-                                target="_blank">
+                                href="updatepassword.php">
                                 <i class="ni ni-ui-04"></i>
                                 <span class="nav-link-text">Change Password</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"
-                                href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html"
-                                target="_blank">
+                                href="updatesecurityques.php">
                                 <i class="ni ni-palette"></i>
                                 <span class="nav-link-text">Change Security Question</span>
                             </a>
