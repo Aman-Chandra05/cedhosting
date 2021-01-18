@@ -76,32 +76,7 @@ $tax=json_decode($res['tax_amt'], true);
 			</div>
 		<?php
 		}
-	
-	/*if(isset($_GET['status']))
-	{
-		$res=$order->fetchorder($_GET['id'],$conn->conn());
-		$details=json_decode($res['details'], true);
-		echo "<pre>";
-		print_r($details);
-		echo "</pre>";
-
-	}	?>		
-			<h2>Customer Name: <?php echo $_SESSION['username'];   ?></h2>
-			<h3><br>Items Purchased</h3>
-			<div>
-				<?php
-		    	foreach ($res as $key) 
-		    	{
-		    	?>
-			    	<p><strong>Product Name:</strong> <?php echo $key['prod_name'];?></p>
-			    	<!-- <p><strong>Plan:</strong> <?php //echo $key['billingcycle'];?></p> -->
-			    	<p><strong>Amount:</strong> &#36;<?php echo $key['ammount'];?></p><br>
-		    	<?php
-			    }
-				?>
-			</div>
-
-	*/?>
+	?>
 
 </div>
 

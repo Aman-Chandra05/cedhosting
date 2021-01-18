@@ -12,21 +12,21 @@ let sgst=0;
 let igst=0;
 
 $("#state").change(function(){
-	tp=parseFloat($('#totalprice').text());
+	tp=Math.round($('#totalprice').text());
 	st=$("#state").val();
 	if(comstate==st)
 	{
 		trans=1;
-		cgst=cgstrate*tp/100;
-		sgst=sgstrate*tp/100;
+		cgst=Math.round(cgstrate*tp/100);
+		sgst=Math.round(sgstrate*tp/100);
 		tp=tp+cgst+sgst;
 		tp=Math.round(tp);
 		taxammount=Math.round(cgst+sgst);
 	}
 	else
 	{
-        trans=0;
-		igst=igstrate*(tp)/100;
+    trans=0;
+		igst=Math.round(igstrate*(tp)/100);
 		taxammount=igst;
 		tp=tp+igst;
 		tp=Math.round(tp);
@@ -117,57 +117,49 @@ paypal.Buttons({
             // $('#orderid').text(details.id);
             if(details.status=="COMPLETED")
             {
-                console.log(details);
             	status=details.status
-    		    //placingorder(status);
+    		      placingorder(status,details.id);
             }
             else
             {
-            	//window.location.href = "fail.php";
+            	window.location.href = "fail.php";
             }
           });
         }
-
-
-
-
-
-
     }
 }).render('#paypal-button-container');
 
 
-function placingorder(status)
+function placingorder(status,txnid=0)
 {
-	let hno=$("#hno").val();
+	  let hno=$("#hno").val();
     let city=$("#city").val();
     let state=$("#state").val();
     let pincode=$("#pincode").val();
     let country=$("#country").val();
     let orderstatus=status;
     $.ajax({
-        url: 'order.php',
-        method: 'POST',
-        data: {hno,city,state,pincode,country,taxammount,payableprice,orderstatus,igst,cgst,sgst,},
-        dataType: 'json',
-        success: function(result)
+      url:'order.php',
+      method: 'POST',
+      data: {hno,city,state,pincode,country,taxammount,payableprice,orderstatus,igst,cgst,sgst,txnid},
+      dataType: 'json',
+      success: function(result)
+      {
+        console.log(result);
+        if(result.res=="success")
         {
-            console.log(result);
-        	if(result.res=="success")
-        	{
-                //alert("success");
-        		location.replace('success.php?igst='+igst+'&cgst='+cgst+'&sgst='+sgst+'&trans='+trans+'&id='+result.orderid);
-        		
-        	}
-        	else if(result.res=="fail")
-        	{
-                //alert("Not inserted");
-        		window.location.replace("fail.php");
-        	}
-        },
-        error: function()
-        {
-        	alert("error");
+          console.log(result);
+          location.replace('success.php?igst='+igst+'&cgst='+cgst+'&sgst='+sgst+'&trans='+trans+'&id='+result.orderid);		
         }
-    });        	
+        else if(result.res=="fail")
+        {
+          //alert("Not inserted");
+          window.location.replace("fail.php");
+        }
+      },
+      error: function()
+      {
+        alert ("error");
+      }
+    });     	
 }

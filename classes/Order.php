@@ -2,9 +2,9 @@
 //session_start();
 class Order
 {
-	public function addorder($userid,$userbillindid,$status,$promocodeid,$disamm,$afterdis,$taxamm,$finalamm,$details,$address,$conn)
+	public function addorder($userid,$userbillindid,$status,$promocodeid,$disamm,$afterdis,$taxamm,$finalamm,$details,$address,$txnid,$conn)
 	{
-		$sql="INSERT INTO `tbl_orders`(`user_id`, `order_date`, `status`, `promocode_applied_id`, `discount_amt`, `total_amt_after_dis`, `tax_amt`, `final_invoice_amt`,`details`,`address`) VALUES ('$userid',NOW(),'$status','$promocodeid','$disamm','$afterdis','$taxamm','$finalamm','$details','$address')";
+		$sql="INSERT INTO `tbl_orders`(`user_id`, `order_date`, `status`, `promocode_applied_id`, `discount_amt`, `total_amt_after_dis`, `tax_amt`, `final_invoice_amt`,`details`,`address`,`txnid`) VALUES ('$userid',NOW(),'$status','$promocodeid','$disamm','$afterdis','$taxamm','$finalamm','$details','$address','$txnid')";
         $res=$conn->query($sql);
         if($res===TRUE)
         {
