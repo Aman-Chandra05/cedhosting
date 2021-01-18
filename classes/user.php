@@ -130,5 +130,55 @@ class User
         $conn->close();
         return $err;
     }
+
+    public function updatepassword($id,$checkpassword,$password,$conpassword,$conn)
+    {
+        $err=array();
+        $sql="SELECT * FROM `tbl_user` WHERE `id`='$id'";
+        $res=$conn->query($sql);
+        $res=$res->fetch_assoc();
+        if($res['password']!=md5($checkpassword))
+            $err['password']="* Wrong password";
+        if(count($err)==0)
+        {
+            if($password==$conpassword)
+            {
+                $password=md5($password);
+                $sql="UPDATE `tbl_user` SET `password`='$password' WHERE `id`='$id'";
+                $res=$conn->query($sql);
+            }
+            else 
+            {
+                $err['conpassword']="* Password does not match";
+            }
+        }
+        $conn->close();
+        return $err;       
+    }
+
+    public function updatesecques($id,$checkpassword,$ques,$ans,$conn)
+    {
+        $err=array();
+        $sql="SELECT * FROM `tbl_user` WHERE `id`='$id'";
+        $res=$conn->query($sql);
+        $res=$res->fetch_assoc();
+        if($res['password']!=md5($checkpassword))
+            $err['password']="* Wrong password";
+        if(count($err)==0)
+        {
+            $sql="SELECT * FROM `tbl_user` WHERE `id`='$id'";
+            $res=$conn->query($sql);
+            $res=$res->fetch_assoc();
+            if($res['security_question']!=$ques && $res['security_answer']!=$ans)
+            {
+                $sql="UPDATE `tbl_user` SET `security_question`='$ques',`security_answer`='$ans' WHERE `id`='$id'";
+                $res=$conn->query($sql);
+            }
+            else
+                $err['status']="Nothing Updated";
+        }
+        $conn->close();
+        return $err;    
+    }
 }
 ?>

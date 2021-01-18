@@ -9,6 +9,7 @@ $order=new Order();
 $totalprice=0;
 $res=$order->fetchorder($_GET['id'],$conn->conn());
 $details=json_decode($res['details'], true);
+$tax=json_decode($res['tax_amt'], true);
 
 //  foreach ($_SESSION['cart'] as $key)  {
 //  	//$taxammount=$taxammount+$key['taxammount'];
@@ -47,18 +48,18 @@ $details=json_decode($res['details'], true);
 
 				<p><strong>Total amount: </strong>&#36; <?php $len=count($details)-1; echo $details[$len];?></p>
 				
-				<p><?php if($_GET['trans']==0)
+				<p><?php if(count($tax)==2)
 					{
-						echo "<p><strong>IGST: </strong>&#36; ".$_GET['igst'];
+						echo "<p><strong>IGST: </strong>&#36; ".$tax['igst'];
 					}
-					elseif($_GET['trans']==1)
+					elseif(count($tax)==3)
 					{
-						echo "<p><strong>CGST:</strong>&#36; ".$_GET['cgst'];
-						echo "<p><strong>SGST:</strong>&#36; ".$_GET['sgst'];
+						echo "<p><strong>CGST:</strong>&#36; ".$tax['cgst'];
+						echo "<p><strong>SGST:</strong>&#36; ".$tax['sgst'];
 					}
 
 				?>
-				<p><strong>Total Tax amount: </strong>&#36; <?php echo $res['tax_amt'];?></p>
+				<p><strong>Total Tax amount: </strong>&#36; <?php echo $tax['tax'];?></p>
 				<p><strong>Final amount: </strong>&#36; <?php echo $res['final_invoice_amt'];?></p>		
 		<?php
 		if ($res['status']==0) 

@@ -17,6 +17,22 @@ if(isset($_POST))
 	$state = isset($_POST['state']) ? ($_POST['state']) : "";
 	$pincode = isset($_POST['pincode']) ? ($_POST['pincode']) : "";
 	$country = isset($_POST['country']) ? ($_POST['country']) : "";
+	$igst = isset($_POST['igst']) ? ($_POST['igst']) : "";
+	$cgst = isset($_POST['cgst']) ? ($_POST['cgst']) : "";
+	$sgst = isset($_POST['sgst']) ? ($_POST['sgst']) : "";
+	$taxammount = isset($_POST['taxammount']) ? ($_POST['taxammount']) : "";
+	$taxarray=array();
+	if($igst!=0)
+		$taxarray['igst']=$igst;
+	if($sgst!=0)
+		$taxarray['igst']=$sgst;
+	if($cgst!=0)
+		$taxarray['igst']=$cgst;
+	$taxarray['tax']=$taxammount;
+	$tax = json_encode($taxarray);
+	$addressarray=array("hno"=>$hno,"city"=>$city,"state"=>$state,"pincode"=>$pincode,"country"=>$country);
+	$address=json_encode($addressarray);
+
 	if(isset($_POST['orderstatus']))
 	{
 		if($_POST['orderstatus']=="COMPLETED")
@@ -28,9 +44,8 @@ if(isset($_POST))
 		}
 	}
 	$res=$add->insertaddress($_SESSION['userid'],$_SESSION['username'],$hno,$city,$state,$country,$pincode,$conn->conn());
-	if($res!=-1)
-	{
-		$res1=$order->addorder($_SESSION['userid'],$res,$status,'0','0','0',$_POST['taxammount'],$_POST['payableprice'],$_SESSION['cartdetails'],$conn->conn());
+	echo '<br>ADDRESS'.$res;
+		$res1=$order->addorder($_SESSION['userid'],$res,$status,'0','0','0',$tax,$_POST['payableprice'],$_SESSION['cartdetails'],$address,$conn->conn());
 		if($res1)
 		{
 			unset($_SESSION['cart']);
@@ -42,10 +57,9 @@ if(isset($_POST))
 		else
 		{
 			$arr=array("res"=>"fail");
-			echo json_encode($arr);
-			//echo $arr;
+			echo json_encode($arr);	
 		}
-	}
+	
 }
 
 ?>

@@ -106,3 +106,73 @@ function allCharactersSame(a)
             return false;
     return true;
 }
+    function validatepassword()
+    {
+        let password=document.getElementById('password');
+        let conpassword = document.getElementById('conpassword');
+        let passworderr=document.getElementById('passworderr');
+        let conpassworderr=document.getElementById('conpassworderr');
+
+        let passwordvalue=password.value;
+        let conpasswordvalue=conpassword.value;
+        let passwordcheck=/^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,16}$/;
+        console.log(passwordvalue.length);
+        if(!(passwordvalue.length>=8 && passwordvalue.length<=16))
+        {
+            passworderr.innerHTML="* Length should be between 8 and 16";
+            return false;
+        }
+        if(passwordvalue.includes(" "))
+        {
+            passworderr.innerHTML="* white spaces not allowed";
+            return false;
+        }
+        if(!passwordcheck.test(passwordvalue))
+        {
+           passworderr.innerHTML="* Should be combination of upper case, lower case, special characters and digits.";
+           return false;
+        }
+        else
+        {
+           passworderr.innerHTML="";        
+        }
+        if(conpasswordvalue!=passwordvalue)
+        {
+            conpassworderr.innerHTML="* Password does not match";
+            return false;
+        }
+        else
+        {
+            conpassworderr.innerHTML="";
+        }
+    }
+
+function validateques()
+{
+    let answer=document.getElementById('answer');
+    let answererr=document.getElementById('answererror');
+    answer.value=answer.value.trim();
+    let answercheck=/^\d*[a-zA-Z][a-zA-Z\d]*$/;
+    let answervalue=answer.value;
+    if(!isNaN(answervalue))
+    {
+        answererr.innerHTML="* Number not allowed";
+        return false;
+
+    }
+    if(answervalue.includes(" "))
+    {
+        answererr.innerHTML="* No whites Spaces allowed.";
+        return false;       
+    }
+    if(!answercheck.test(answervalue))
+    {
+       answererr.innerHTML="* Can be alpha-numeric/alphabetic. Is CASE-SENSITIVE";
+        return false;
+    }
+    else
+    {
+       answererr.innerHTML="";      
+    }
+
+}

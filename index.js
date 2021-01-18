@@ -117,12 +117,13 @@ paypal.Buttons({
             // $('#orderid').text(details.id);
             if(details.status=="COMPLETED")
             {
+                console.log(details);
             	status=details.status
-    		    placingorder(status);
+    		    //placingorder(status);
             }
             else
             {
-            	window.location.href = "fail.php";
+            	//window.location.href = "fail.php";
             }
           });
         }
@@ -147,18 +148,20 @@ function placingorder(status)
     $.ajax({
         url: 'order.php',
         method: 'POST',
-        data: {hno,city,state,pincode,country,taxammount,payableprice,orderstatus},
+        data: {hno,city,state,pincode,country,taxammount,payableprice,orderstatus,igst,cgst,sgst,},
         dataType: 'json',
         success: function(result)
         {
             console.log(result);
         	if(result.res=="success")
         	{
+                //alert("success");
         		location.replace('success.php?igst='+igst+'&cgst='+cgst+'&sgst='+sgst+'&trans='+trans+'&id='+result.orderid);
         		
         	}
-        	else if(resul.res=="fail")
+        	else if(result.res=="fail")
         	{
+                //alert("Not inserted");
         		window.location.replace("fail.php");
         	}
         },
