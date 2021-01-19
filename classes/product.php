@@ -34,10 +34,14 @@ class Product
             return 0;
         }   
     }
-    public function getallcategories($conn)
+    public function getallcategories($conn,$all='no')
     {
         $arr=array();
-        $sql="SELECT * FROM `tbl_product` WHERE `prod_parent_id`='1'";
+        if($all=='all')
+        {
+            $sql="SELECT * FROM `tbl_product` WHERE `prod_parent_id`='1'";
+        }
+        else $sql="SELECT * FROM `tbl_product` WHERE `prod_parent_id`='1' AND `prod_available`='1'";
         $res=$conn->query($sql);
         if($res->num_rows>0)
         {
@@ -88,6 +92,22 @@ class Product
             } 
         }
     }
+
+    public function changeavailability($id,$status,$conn)
+    {
+        if($status==1)
+            $sql="UPDATE `tbl_product` SET `prod_available`='0' WHERE `id`='$id'";
+        elseif($status==0)
+            $sql="UPDATE `tbl_product` SET `prod_available`='1' WHERE `id`='$id'";
+        $res=$conn->query($sql);
+        if($res===TRUE)
+            return 1;
+        else return 0;
+    }
+
+
+
+
     public function addproduct($category,$name,$pageurl,$mp,$ap,$sku,$desc,$conn)
     {
         $sql="SELECT * FROM `tbl_product` WHERE `prod_parent_id`='$category' AND `prod_name`='$name'";

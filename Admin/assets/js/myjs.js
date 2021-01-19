@@ -1,10 +1,36 @@
 $(document).ready(function() 
 {
+    $('table').DataTable();
+
     $('.editcategory').click(function(){
         $('#categoryid').val($(this).data('id'));
         $('#categoryname').val($(this).data('value'));
         $("#updatecatmsg").html("");
     });
+
+    $('.status').click(function(){
+        let id=$(this).data('id');
+        let status=$(this).data('status');
+        console.log(id);
+        $.ajax({
+            url: 'editcategory.php',
+            method: 'POST',
+            data: {id,status},
+            dataType: 'html',
+            success: function(result)
+            {
+                if(result==1)
+                    location.reload();
+                else alert("Operation Failed!!!");
+            },
+            error: function()
+            {
+                alert("error");
+            }
+        }); 
+
+    });
+
     $('#updatecat').click(function(){
         let id=$('#categoryid').val();
         let name=$('#categoryname').val();

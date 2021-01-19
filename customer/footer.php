@@ -38,7 +38,10 @@
   <script src="assets/vendor/chart.js/dist/Chart.extension.js"></script>
   <!-- Argon JS -->
   <script src="assets/js/argon.js?v=1.2.0"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+
   <script src="assets/js/myjs.js"></script>
+
 </body>
 
 </html>

@@ -1,7 +1,7 @@
-$(document).ready(function() 
-{
+$(document).ready( function () {
     console.log("aman");
-}); 
+    $('table').DataTable();
+} );
 
 function validatereg()
 {

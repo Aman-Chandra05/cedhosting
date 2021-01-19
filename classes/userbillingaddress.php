@@ -54,17 +54,24 @@ class UserBillingAddress
 			return 1;
 		else return 0;
 	}*/
-	/*public function fetchbillingaddress($id,$conn)
+	public function fetchbillingaddress($id,$conn,$orderid=-1)
 	{
-		$sql="SELECT * FROM `tbl_user_billing_add` WHERE `user_id`='$id' AND `fixed`='1'";
+		$arr=array();
+		if($orderid==-1)	
+			$sql="SELECT * FROM `tbl_user_billing_add` WHERE `user_id`='$id'";
+		else
+			$sql="SELECT * FROM `tbl_user_billing_add` WHERE `user_id`='$id' AND `id`='$orderid'";
 		$res=$conn->query($sql);
 		if($res->num_rows>0)
 		{
-			$res=$res->fetch_assoc();
-			return $res;
+			while($row=$res->fetch_assoc())
+			{
+				$arr[]=$row;
+			}
+			return $arr;
 		}
 		else return 0;
-	}*/
+	}
 }
 
 

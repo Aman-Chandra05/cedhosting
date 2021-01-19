@@ -85,7 +85,7 @@ require_once 'header.php';
                             </tr>
                         </thead>
                         <?php
-                        $res=$product->getallcategories($conn->conn());
+                        $res=$product->getallcategories($conn->conn(),'all');
                         if($res!=0)
                         {?>
                         <tbody>
@@ -97,7 +97,7 @@ require_once 'header.php';
                         <td><?php echo $key['id'];?></td>
                         <td><?php echo $key['prod_parent_id'];?></td>
                         <td><?php echo $key['prod_name'];?></td>
-                        <td><?php if($key['prod_available']==1) echo 'Yes'; else echo 'No';?></td>
+                        <td><?php if($key['prod_available']==1) echo '<button data-id="'.$key['id'].'" type="button" data-status="1" class="btn btn-primary btn-sm status">Yes</button>'; else echo '<button data-id="'.$key['id'].'" type="button" data-status="0" class="btn btn-warning btn-sm status">No</button>';?></td>
                         <td><?php echo $key['prod_launch_date'];?></td>
                         <td><a href="#" data-id="<?php echo $key['id'];?>" data-value="<?php echo $key['prod_name'];?>" data-toggle="modal" data-target="#updateform" class="btn btn-primary btn-sm editcategory">Edit</a>
                             <a href="?action=delete&id=<?php echo $key['id'];?>" class="btn btn-danger btn-sm">Delete</a>
@@ -146,3 +146,7 @@ require_once 'header.php';
 <?php
 require_once 'footer.php';
 ?>
+
+
+
+

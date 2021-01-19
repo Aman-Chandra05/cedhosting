@@ -39,6 +39,8 @@ header('location:../index.php');
     <!-- Argon CSS -->
     <link rel="stylesheet" href="assets/css/argon.css?v=1.2.0" type="text/css">
     <link rel="stylesheet" href="assets/css/mycss.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+
 </head>
 
 <body>
@@ -47,7 +49,7 @@ header('location:../index.php');
         <div class="scrollbar-inner">
             <!-- Brand -->
             <div class="sidenav-header  align-items-center">
-                <a class="navbar-brand" href="javascript:void(0)">
+                <a class="navbar-brand" href="../">
                     <h1><span id="ced">SHOP</span> <span id="hosting">NOW</span></h1>
                 </a>
             </div>
