@@ -46,14 +46,21 @@ class UserBillingAddress
         }
 	}
 
-	/*public function updatebillingaddress($id,$billingname,$hno,$city,$state,$country,$pincode,$conn)
+	public function updatebillingaddress($id,$billingname,$hno,$city,$state,$country,$pincode,$conn,$addid)
 	{
-		$sql="UPDATE `tbl_user_billing_add` SET `billing_name`='$billingname',`house_no`='$hno',`city`='$city',`state`='$state',`country`='$country',`pincode`='$pincode' WHERE `user_id`='$id' AND `fixed`='0'"; 
+		$sql="SELECT * FROM `tbl_user_billing_add` WHERE `user_id`='$id' AND `id`='$addid'";
+		$res=$conn->query($sql);
+		$res=$res->fetch_assoc();
+		if($res['house_no']==$hno && $res['city']==$city && $res['state']==$state && $res['country']==$country && $res['pincode']==$pincode)
+		{
+			return -1;
+		}
+		$sql="UPDATE `tbl_user_billing_add` SET `billing_name`='$billingname',`house_no`='$hno',`city`='$city',`state`='$state',`country`='$country',`pincode`='$pincode' WHERE `user_id`='$id' AND `id`='$addid'"; 
 		$res=$conn->query($sql);
 		if($res===TRUE)
 			return 1;
 		else return 0;
-	}*/
+	}
 	public function fetchbillingaddress($id,$conn,$orderid=-1)
 	{
 		$arr=array();

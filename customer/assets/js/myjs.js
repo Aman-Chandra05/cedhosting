@@ -1,6 +1,33 @@
 $(document).ready( function () {
     console.log("aman");
     $('table').DataTable();
+
+    $('.address').click(function(){
+        let id=$(this).val();
+        let address='fetchaddress';
+        $.ajax({
+          url:'getadddress.php',
+          method: 'POST',
+          data: {id,address},
+          dataType: 'json',
+          success: function(result)
+          {
+            $("#addid").val(result[0].id);
+            $("#country").val(result[0].country);
+            $("#state").val(result[0].state);
+            $("#pincode").val(result[0].pincode);
+            $("#hno").val(result[0].house_no);
+            $("#country").val(result[0].country);
+            $("#city").val(result[0].city);
+          },
+          error: function()
+          {
+            alert ("error");
+          }
+        });   
+    });
+
+
 } );
 
 function validatereg()
