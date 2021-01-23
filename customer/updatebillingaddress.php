@@ -74,22 +74,35 @@ require_once 'header.php';
                                 <?php 
                                 if($res0==1)
                                 {?>
-                                    <div class="alert alert-success" role="alert">
-                                        <strong>Success!</strong> Updation success!!!
+
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                        <span class="alert-text"><strong>Success!</strong> Updation success!!!</span>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
                                 <?php
                                 }
                                 elseif($res0==0)
                                 {?>
-                                    <div class="alert alert-danger" role="alert">
-                                        <strong>Danger!</strong> Updation Failed
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                        <span class="alert-text"> <strong>Danger!</strong> Updation Failed</span>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
                                 <?php
                                 }
                                 elseif($res0==-1)
                                 {?>
-                                    <div class="alert alert-warning" role="alert">
-                                        <strong>Warning!</strong> Nothing Updated!!!
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                        <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                        <span class="alert-text"><strong>Warning!</strong> Nothing Updated!!!</span>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
                                 <?php
                                 }
