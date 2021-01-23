@@ -79,6 +79,12 @@ class UserBillingAddress
 		}
 		else return 0;
 	}
+
+	public function deleteaddress($id,$userid,$conn)
+	{
+		$sql="DELETE FROM `tbl_user_billing_add` WHERE `id`='$id' AND `user_id`='$userid'";
+		$res=$conn->query($sql);
+	}
 }
 
 
